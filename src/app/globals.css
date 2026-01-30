@@ -123,3 +123,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.global_heading{
+  @apply sm:text-2xl text-lg font-bold tracking-tight
+}

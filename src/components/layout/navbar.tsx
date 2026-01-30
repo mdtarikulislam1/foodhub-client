@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { ModeToggle } from "./modeToggle";
+import Image from "next/image";
 
 interface MenuItem {
   title: string;
@@ -41,8 +42,6 @@ interface Navbar1Props {
   className?: string;
   logo?: {
     src: string;
-    alt: string;
-    title: string;
     className?: string;
   };
   menu?: MenuItem[];
@@ -60,16 +59,14 @@ interface Navbar1Props {
 
 const Navbar = ({
   logo = {
-    src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXJzcy1pY29uIGx1Y2lkZS1yc3MiPjxwYXRoIGQ9Ik00IDExYTkgOSAwIDAgMSA5IDkiLz48cGF0aCBkPSJNNCA0YTE2IDE2IDAgMCAxIDE2IDE2Ii8+PGNpcmNsZSBjeD0iNSIgY3k9IjE5IiByPSIxIi8+PC9zdmc+",
-    alt: "logo",
-    title: "My Blog",
+    src: "https://i.postimg.cc/XqkYWdJz/975c7d32-4b1e-4e9e-9f1e-bc251d60e468.png",
   },
   menu = [
     { title: "Home", url: "/" },
 
     {
-      title: "Blogs",
-      url: "/blogs",
+      title: "Meals",
+      url: "/meals",
     },
     {
       title: "About",
@@ -87,28 +84,19 @@ const Navbar = ({
   className,
 }: Navbar1Props) => {
   return (
-    <section className={cn("py-4 ", className)}>
+    <section className={cn("py-2 ", className)}>
       <div className="container mx-auto px-3">
         {/* Desktop Menu */}
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
+
+            <div className="relative w-14 h-14">
+              <Image fill src={logo.src} alt="logo" />
             </div>
-            <div className="flex items-center">
-              <NavigationMenu>
-                <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
-                </NavigationMenuList>
-              </NavigationMenu>
+
+            <div className="flex gap-2 items-center">
+              {menu.map((item,index) => (<Link href={item.url} key={index}>{item.title}</Link>))}
             </div>
           </div>
           <div className="flex gap-2">
@@ -127,12 +115,8 @@ const Navbar = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
+            <div className="relative w-16 h-16">
+              <Image fill src={logo.src} alt="logo" />
             </div>
             <Sheet>
               <SheetTrigger asChild>
@@ -143,12 +127,8 @@ const Navbar = ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <div className="flex items-center gap-2">
-                      <img
-                        src={logo.src}
-                        className="max-h-8 dark:invert"
-                        alt={logo.alt}
-                      />
+                    <div className="relative w-16 h-16">
+                      <Image fill src={logo.src} alt="logo" />
                     </div>
                   </SheetTitle>
                 </SheetHeader>
