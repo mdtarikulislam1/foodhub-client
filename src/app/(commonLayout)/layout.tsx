@@ -8,7 +8,7 @@ export default function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div suppressHydrationWarning>
       <Navbar className="sticky top-0 z-50 w-full backdrop-blur-2xl"></Navbar>
       {children}
       <Footer></Footer>
