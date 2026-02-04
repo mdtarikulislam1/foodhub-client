@@ -46,3 +46,7 @@ export const proxy = async (request: NextRequest) => {
 
   return NextResponse.next();
 };
+
+export const config = {
+  matcher: ["/admin-dashboard/:path*", "/provider-dashboard/:path*", "/customer-dashboard/:path*"],
+};
