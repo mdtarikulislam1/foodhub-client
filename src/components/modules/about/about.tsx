@@ -1,13 +1,12 @@
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import { Car } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
 export default function About() {
   return (
     <div className="max-w-[1800px] mx-auto px-2 pb-3">
-      <h3 className="global_heading text-center py-3">
-        About FoodHub
-      </h3>
+      <h3 className="global_heading text-center py-3">About FoodHub</h3>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Image */}
@@ -22,9 +21,7 @@ export default function About() {
 
         {/* Card */}
         <Card className="p-6 shadow-lg hover:shadow-xl transition-shadow">
-          <CardTitle>
-            Fresh, Healthy & Reliable
-          </CardTitle>
+          <CardTitle>Fresh, Healthy & Reliable</CardTitle>
           <CardContent className="space-y-4 text-muted-foreground">
             <p>
               At FoodHub, we are passionate about delivering fresh, natural, and
@@ -40,6 +37,17 @@ export default function About() {
             <p>
               With optimized logistics and dedicated customer support, FoodHub
               ensures fast, safe, and reliable delivery every time.
+            </p>
+          </CardContent>
+          <CardTitle >
+            Our Mission & Vision
+          </CardTitle>
+          <CardContent className="text-muted-foreground">
+            <p>
+              Our mission at FoodHub is to revolutionize the way people access
+              fresh and healthy food by leveraging technology and efficient
+              logistics. We envision a world where everyone has easy access to
+              nutritious food options that support their well-being and lifestyle.
             </p>
           </CardContent>
         </Card>

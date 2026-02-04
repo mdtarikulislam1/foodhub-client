@@ -1,24 +1,25 @@
+
 import { Base_URL } from "@/helper/baseUrl";
 import { cookies } from "next/headers";
 
+
 export const userService = {
-  getSession: async () => {
+  getSession: async function () {
     try {
       const cookieStore = await cookies();
-      const response = await fetch(`${Base_URL}/auth/session`, {
+
+      const res = await fetch(`${Base_URL}/get-session`, {
         headers: {
-          "Content-Type": "application/json",
           Cookie: cookieStore.toString(),
         },
-        credentials: "include",
+        cache: "no-store",
       });
-      if (!response.ok) {
-        throw new Error("Failed to fetch session");
-      }
-      const data = await response.json();
-      return { data: data, error: null };
-    } catch (error) {
-      return { data: null, error: error };
+
+      const session = await res.json();
+
+      return { data: session, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Something went wrong" } };
     }
   },
 };

@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { ModeToggle } from "@/components/layout/modeToggle";
+import { ProfileDropdown } from "@/components/layout/profile-dropdown";
 
 import {
   Breadcrumb,
@@ -20,10 +21,12 @@ import { userService } from "@/service/user.service";
 
 export default async function DashBoardLayout({
   admin,
-  user,
+  customer,
+  provider,
 }: {
   admin: React.ReactNode;
-  user: React.ReactNode;
+  customer: React.ReactNode;
+  provider: React.ReactNode;
 }) {
   const { data } = await userService.getSession();
   const userInfo = data?.user;
@@ -37,15 +40,16 @@ export default async function DashBoardLayout({
 
           <BreadcrumbList>
             <ModeToggle></ModeToggle>
+            <ProfileDropdown data={data} />
           </BreadcrumbList>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
           {userInfo.role === Roles.ADMIN ? (
             admin
           ) : userInfo.role === Roles.CUSTOMER ? (
-            user
+            customer
           ) : userInfo.role === Roles.PROVIDER ? (
-            user
+            provider
           ) : (
             <div>Unauthorized</div>
           )}

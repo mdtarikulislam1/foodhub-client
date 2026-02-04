@@ -29,6 +29,9 @@ import {
 import Link from "next/link";
 import { ModeToggle } from "./modeToggle";
 import Image from "next/image";
+import { UserSessionResponse } from "@/types/user.type";
+import { ProfileDropdown } from "./profile-dropdown";
+
 
 interface MenuItem {
   title: string;
@@ -57,7 +60,10 @@ interface Navbar1Props {
   };
 }
 
-const Navbar = ({
+
+
+const Navbar = (
+  {
   logo = {
     src: "https://i.postimg.cc/XqkYWdJz/975c7d32-4b1e-4e9e-9f1e-bc251d60e468.png",
   },
@@ -74,7 +80,7 @@ const Navbar = ({
     },
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/customer-dashboard",
     },
   ],
   auth = {
@@ -82,7 +88,10 @@ const Navbar = ({
     signup: { title: "Sign up", url: "/register" },
   },
   className,
-}: Navbar1Props) => {
+  data,
+}: Navbar1Props & { data?: UserSessionResponse }) => {
+
+  console.log(data)
   return (
     <section className={cn("py-2 ", className)}>
       <div className="container mx-auto px-3">
@@ -102,12 +111,18 @@ const Navbar = ({
           <div className="flex gap-2">
             <ModeToggle></ModeToggle>
 
-            <Button asChild variant="outline">
-              <Link href={auth.login.url}>{auth.login.title}</Link>
-            </Button>
-            <Button asChild>
-              <Link href={auth.signup.url}>{auth.signup.title}</Link>
-            </Button>
+            {data && data.user ? (
+              <ProfileDropdown data={data} />
+            ) : (
+              <>
+                <Button asChild variant="outline">
+                  <Link href={auth.login.url}>{auth.login.title}</Link> 
+                </Button>
+                <Button asChild>
+                  <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                </Button>
+              </>
+            )}
           </div>
         </nav>
 
