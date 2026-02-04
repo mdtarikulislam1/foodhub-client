@@ -6,6 +6,11 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   // Override default ignores of eslint-config-next.
+  {
+    rules: {
+      "react/no-children-prop": ["error", { allowFunctions: true }],
+    },
+  },
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
