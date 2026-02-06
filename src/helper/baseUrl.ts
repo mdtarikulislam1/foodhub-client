@@ -1,1 +1,2 @@
-export const Base_URL = process.env.AUTH_URL || 'http://localhost:5000/api/auth';
+export const Base_URL =
+  process.env.API_URL || "http://localhost:5000/api/v1/";

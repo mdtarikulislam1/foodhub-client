@@ -1,14 +1,14 @@
 
-import { Base_URL } from "@/helper/baseUrl";
 import { cookies } from "next/headers";
 
+const baseUrl = process.env.AUTH_URL
 
 export const userService = {
   getSession: async function () {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${Base_URL}/get-session`, {
+      const res = await fetch(`${baseUrl}/get-session`, {
         headers: {
           Cookie: cookieStore.toString(),
         },

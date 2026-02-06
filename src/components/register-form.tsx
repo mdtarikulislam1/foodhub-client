@@ -16,45 +16,46 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
-import { useForm } from "@tanstack/react-form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { toast } from "sonner";
 import * as z from "zod";
 
 const formSchema = z.object({
   name: z.string().min(4, "This field is required"),
-  email: z.email(),
+  email: z.string().email(),
   password: z.string().min(6, "Minimum length 6"),
   image: z.string().or(z.literal("")),
 });
 
-export function Registerform({ ...props }: React.ComponentProps<typeof Card>) {
-  const form = useForm({
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      image: "",
-    },
-    validators: {
-      onSubmit: formSchema,
-    },
-    onSubmit: async ({ value }) => {
-      const toastId = toast.loading("creating user");
-      try {
-        const { data, error } = await authClient.signUp.email(value);
+type RegisterFormValues = z.infer<typeof formSchema>;
 
-        console.log(data,error)
-        if (error) {
-          toast.error(error.message, { id: toastId });
-          return;
-        }
-        toast.success("user created successfully", { id: toastId });
-      } catch (err) {
-        toast.error("something went wrong please try again", { id: toastId });
-      }
-    },
+export function Registerform({ ...props }: React.ComponentProps<typeof Card>) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { name: "", email: "", password: "", image: "" },
   });
+
+  const onSubmit = async (value: RegisterFormValues) => {
+    const toastId = toast.loading("creating user");
+    try {
+      const { data, error } = await authClient.signUp.email(value);
+
+      console.log(data, error);
+      if (error) {
+        toast.error(error.message, { id: toastId });
+        return;
+      }
+      toast.success("user created successfully", { id: toastId });
+    } catch (err) {
+      toast.error("something went wrong please try again", { id: toastId });
+    }
+  };
 
   return (
     <Card className="max-w-md mx-auto" {...props}>
@@ -65,100 +66,54 @@ export function Registerform({ ...props }: React.ComponentProps<typeof Card>) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            form.handleSubmit();
-          }}
-        >
+        <form onSubmit={handleSubmit(onSubmit)}>
           <FieldGroup>
             {/* name */}
-            <form.Field
-              name="name"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field>
-                    <FieldLabel htmlFor={field.name}>Name</FieldLabel>
-                    <Input
-                      type="text"
-                      id={field.name}
-                      value={field.state.value}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
+            <Field data-invalid={!!errors.name}>
+              <FieldLabel htmlFor="name">Name</FieldLabel>
+              <Input type="text" id="name" {...register("name")} />
+              {errors.name && (
+                <FieldError
+                  errors={[{ message: errors.name.message as string }]}
+                />
+              )}
+            </Field>
 
             {/* email */}
-            <form.Field
-              name="email"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field>
-                    <FieldLabel htmlFor={field.name}>Email</FieldLabel>
-                    <Input
-                      type="email"
-                      id={field.name}
-                      value={field.state.value}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
+            <Field data-invalid={!!errors.email}>
+              <FieldLabel htmlFor="email">Email</FieldLabel>
+              <Input type="email" id="email" {...register("email")} />
+              {errors.email && (
+                <FieldError
+                  errors={[{ message: errors.email.message as string }]}
+                />
+              )}
+            </Field>
 
-            <form.Field
-              name="password"
-              children={(field) => {
-                const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-                return (
-                  <Field>
-                    <FieldLabel htmlFor={field.name}>Password</FieldLabel>
-                    <Input
-                      type="password"
-                      id={field.name}
-                      value={field.state.value}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                    />
-                    {isInvalid && (
-                      <FieldError errors={field.state.meta.errors} />
-                    )}
-                  </Field>
-                );
-              }}
-            />
+            <Field data-invalid={!!errors.password}>
+              <FieldLabel htmlFor="password">Password</FieldLabel>
+              <Input type="password" id="password" {...register("password")} />
+              {errors.password && (
+                <FieldError
+                  errors={[{ message: errors.password.message as string }]}
+                />
+              )}
+            </Field>
 
             {/* image */}
-            <form.Field
-              name="image"
-              children={(field) => (
-                <Field>
-                  <FieldLabel htmlFor={field.name}>Image Url</FieldLabel>
-                  <Input
-                    type="url"
-                    id={field.name}
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                  />
-                </Field>
+            <Field data-invalid={!!errors.image}>
+              <FieldLabel htmlFor="image">Image Url</FieldLabel>
+              <Input type="url" id="image" {...register("image")} />
+              {errors.image && (
+                <FieldError
+                  errors={[{ message: errors.image.message as string }]}
+                />
               )}
-            />
+            </Field>
 
             <Field>
               <Button type="submit">Create Account</Button>
-             
+
               <FieldDescription className="px-6 text-center">
                 Already have an account? <Link href="/login">Sign in</Link>
               </FieldDescription>
