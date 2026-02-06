@@ -11,7 +11,7 @@ export default async function Categories() {
   return (
     <div>
       <CreateCategory></CreateCategory>
-      <AllCagegory data={data}></AllCagegory>
+      <AllCagegory data={data.data}></AllCagegory>
     </div>
   );
 }

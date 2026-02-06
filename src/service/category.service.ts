@@ -1,4 +1,4 @@
-import { Base_URL } from "@/helper/baseUrl";
+import { Base_URL } from "@/helper/function/baseUrl";
 import { CreateCategory } from "@/types/category.type";
 import { cookies } from "next/headers";
 
