@@ -1,10 +1,16 @@
-import { CreateDiets } from '@/components/modules/provider/diets/createDiets'
-import React from 'react'
+import AllDiets from "@/components/modules/provider/diets/allDiets";
+import { CreateDiets } from "@/components/modules/provider/diets/createDiets";
+import { dietsService } from "@/service/diets.service";
+import React from "react";
 
-export default function page() {
+export default async function page() {
+  const { data } = await dietsService.getAllDiets();
+
+//   console.log(data);
   return (
     <div>
-        <CreateDiets/>
+      <CreateDiets />
+      <AllDiets data={data?.data?.diets} />
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { createCategory } from "@/actions/category.action";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,6 +22,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { createDiets } from "@/actions/diets.action";
 
 
 const categorySchema = z.object({
@@ -48,7 +49,6 @@ export function CreateDiets() {
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: "",
-      image: "",
       description: "",
     },
   });
@@ -57,9 +57,8 @@ export function CreateDiets() {
     const toastId = toast.loading("Creating category...");
 
     try {
-      const res = await createCategory({
+      const res = await createDiets({
         name: data.name.trim(),
-        image: data.image || undefined,
         description: data.description || undefined,
       });
 
@@ -108,18 +107,6 @@ export function CreateDiets() {
                 )}
               </Field>
 
-              {/* Image */}
-              <Field data-invalid={!!errors.image}>
-                <FieldLabel>Thumbnail (image url)</FieldLabel>
-                <Input
-                  type="url"
-                  placeholder="Image url"
-                  {...register("image")}
-                />
-                {errors.image && (
-                  <FieldError errors={[{ message: errors.image.message }]} />
-                )}
-              </Field>
 
               {/* Description */}
               <Field data-invalid={!!errors.description}>

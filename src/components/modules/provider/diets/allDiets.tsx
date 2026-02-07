@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatDate } from "@/helper/ui/formatDate";
-import { Category } from "@/types/product.type";
+import { Diets } from "@/types/product.type";
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -21,7 +21,7 @@ import {
 import { MoreHorizontalIcon } from "lucide-react";
 import React from "react";
 
-export default function AllCagegory({ data }: { data: Category[] }) {
+export default function AllDiets({ data }: { data: Diets[] }) {
   console.log(data);
   return (
     <div className="max-w-4xl mx-auto">
@@ -37,7 +37,7 @@ export default function AllCagegory({ data }: { data: Category[] }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.map((item, index) => (
+              {data?.map((item, index) => (
                 <TableRow key={index}>
                   <TableCell>{item?.name}</TableCell>
 
