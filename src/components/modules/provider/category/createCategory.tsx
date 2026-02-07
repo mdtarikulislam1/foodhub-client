@@ -24,7 +24,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
 
-/* ---------------- ZOD SCHEMA ---------------- */
 const categorySchema = z.object({
   name: z
     .string()

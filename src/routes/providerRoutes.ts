@@ -6,6 +6,7 @@ export const providerRoutes = [
         title: "Dashboard",
         url: "/provider-dashboard/dashboard",
       },
+      // orders
       {
         title: "Orders",
         items: [
@@ -23,14 +24,12 @@ export const providerRoutes = [
           },
         ],
       },
+
       {
         title: "Categories",
         url: "/provider-dashboard/categories",
       },
-      {
-        title: "Branding",
-        url: "/provider-dashboard/branding",
-      },
+
       {
         title: "Dietary Preferences",
         url: "/provider-dashboard/dietary-preferences",

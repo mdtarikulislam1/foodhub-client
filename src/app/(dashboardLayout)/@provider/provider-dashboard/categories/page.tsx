@@ -1,5 +1,5 @@
-import AllCagegory from "@/components/modules/category/allCagegory";
-import { CreateCategory } from "@/components/modules/category/createCategory";
+import AllCagegory from "@/components/modules/provider/category/allCagegory";
+import { CreateCategory } from "@/components/modules/provider/category/createCategory";
 import { categoryService } from "@/service/category.service";
 
 import React from "react";
